@@ -1,0 +1,79 @@
+.connectwallet_modal{
+    border-radius: 1.5em;
+    color: bl; 
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 38% !important;
+    padding: 0 0 1% 0 !important;
+    background-color: white ;
+    box-Shadow: none;
+    border-radius: 22px !important;
+
+}
+.poc_gradient-btn {
+    background:rgb(212, 175, 55);
+    border-radius: 0.7em;
+    padding: 0.5em 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none !important;
+    outline: none !important;
+    color: white;
+    
+  }
+ 
+ .connect_header{
+    background:rgb(212, 175, 55) !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    color: white !important;
+    border-radius: 22px 22px 0 0 !important;
+    padding: 5% 2.5% !important;
+    font-family:LufgaRegular!important;
+  }
+.itemContainer{
+  padding: 0%;
+  margin: 4% 12% 2% 12%;
+  background-color: #f4f4f4;
+  border-radius: 1em;
+}
+.radioContainer{
+      color:rgb(19, 7, 7)!important;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      height: 50px;
+      padding:2em 1.5em;
+      margin-bottom:1em;
+      border-radius: 1em;
+      background-color: #ffe66e!important;
+      box-shadow: none!important;
+  }
+ .radioTitle{
+      display: flex;
+      flex: 1;
+      flex-direction: row;
+      align-items: center;
+      color: rgba(255,255,255,0.1);
+      justify-content: flex-start;
+  }
+  .walletTitle{
+    text-align: center;
+    font-weight: 700;
+  }
+  .icons{
+    width: 40px;
+    height: 40px;
+    background-color:white!important;
+    border-radius:5em;
+    padding:8px
+  }
+  .title{
+    color: black;
+    margin-left: 2%;
+  }

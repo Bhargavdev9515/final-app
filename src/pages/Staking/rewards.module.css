@@ -1,0 +1,70 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 25px;
+}
+
+.card {
+  border: 2px solid linear-gradient(45deg, orange, yellow, rgb(47, 185, 47));
+  border-radius: 1em;
+  width: 23%; /* Adjust this according to your needs */
+  margin-bottom: 20px;
+  margin-right: 25px;
+  background: transparent;
+}
+
+.imageContainer {
+  border-radius: 0.5em;
+  align-items: center;
+}
+
+.img {
+  width: 250px;
+  height: 350px;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25);
+  border: transparent 1px solid;
+  border-radius: 1em;
+  margin-left: 30px;
+}
+
+.btn1 {
+  background-color: #4caf50;
+  border: transparent 1px solid;
+  border-radius: 1em;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25);
+  color: white;
+  font-weight: bolder !important;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+}
+
+.btn1:hover {
+  background-color: white;
+  color: rgba(228, 159, 7, 1);
+  font-weight: bolder !important;
+}
+
+.btn2 {
+  background-color: rgba(228, 159, 7, 1);
+  border: transparent 1px solid;
+  border-radius: 1em;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25);
+  color: white;
+  font-weight: bolder !important;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+}
+
+.btn2:hover {
+  background-color: white;
+  color: #4caf50;
+  font-weight: bolder !important;
+}

@@ -1,0 +1,71 @@
+.accordionContainer {
+  width: 80% !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; /* This will center the accordion horizontally */
+  margin: 0 auto; /* This will center the accordion container in its parent */
+}
+
+.accordion {
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 20px !important;
+  position: relative;
+  overflow: hidden;
+  width: 100%; /* add this line */
+  margin: 20px !important;
+}
+
+.accordionContainer > .accordion:nth-child(1) {
+  background: linear-gradient(159deg, rgb(131, 92, 0) 23%, rgb(2, 92, 92) 99%);
+}
+
+.accordionContainer > .accordion:nth-child(2) {
+  background: linear-gradient(159deg, rgb(92, 131, 0) 23%, rgb(2, 92, 92) 99%);
+}
+
+.accordion:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  height: 100%;
+  width: 200%;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.1);
+  transform: rotate(-15deg);
+  transform-origin: 0 0;
+  pointer-events: none;
+}
+
+.accordion:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  height: 100%;
+  width: 200%;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.1);
+  transform: rotate(-15deg);
+  transform-origin: 100% 100%;
+  pointer-events: none;
+}
+
+.accordionSummary,
+.accordionDetails {
+  position: relative;
+  z-index: 2;
+}
+
+.accordionSummary {
+  height: 60px;
+}
+
+.accordionTitle {
+  color: #fff !important;
+  font-size: 1.2em !important;
+  font-weight: bolder;
+  text-align: center;
+  width: 100%;
+}

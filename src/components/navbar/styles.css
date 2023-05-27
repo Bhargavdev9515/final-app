@@ -1,0 +1,98 @@
+.navbar {
+  background: rgb(3, 153, 154);
+  background: linear-gradient(
+    159deg,
+    rgba(3, 153, 154, 1) 0%,
+    rgba(210, 152, 24, 1) 100%
+  );
+  height: 90px;
+  width: 100% !important;
+}
+
+.logo {
+  height: 70px; /* Set the height as per your preference */
+  width: auto; /* Adjust as needed, 'auto' maintains aspect ratio */
+  margin-right: 15px; /* Creates some space between the logo and the rest of the navbar content */
+}
+
+.navbar .navbar {
+  color: #fff; /* Change this to the desired color for the navbar text */
+  text-decoration: none;
+}
+
+.navbar-brand {
+  font-size: 2.5rem !important; /* Larger font size */
+  font-weight: bolder;
+  font-family: "Courier New", Courier, monospace;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Text shadow for contrast */
+
+  background: linear-gradient(45deg, orange, yellow, rgb(47, 185, 47));
+  background-clip: text;
+  -webkit-background-clip: text; /* For better browser compatibility */
+  color: transparent;
+  -webkit-text-fill-color: transparent; /* For better browser compatibility */
+}
+
+.minting {
+  color: #fff !important;
+  font-weight: bold !important;
+  font-size: medium !important;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center center;
+}
+
+.Litepaper {
+  color: #fff !important;
+  font-weight: bold !important;
+  font-size: medium !important;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center center;
+}
+
+.staking {
+  color: #fff !important;
+  font-weight: bold !important;
+  font-size: medium !important;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center center;
+}
+
+.minting:hover {
+  transform: scale(1.2);
+}
+
+.Litepaper:hover {
+  transform: scale(1.2);
+}
+.staking:hover {
+  transform: scale(1.2);
+}
+
+.flex-container {
+  width: 100% !important;
+  display: flex !important;
+  justify-content: space-evenly !important;
+  align-items: center !important;
+}
+
+.links {
+  width: 30% !important;
+  display: flex !important;
+  justify-content: space-around;
+}
+
+.btn {
+  background-color: rgba(3, 153, 154, 1) !important;
+  border-color: transparent 2px solid;
+  border-radius: 20px;
+  padding: 12px 30px !important;
+  font-size: 1rem !important;
+  transition: 0.3s !important;
+}
+
+.btn:hover {
+  background-color: #fff !important;
+  color: rgba(49, 12, 71, 1) !important;
+  border-color: transparent;
+  border-radius: 10px;
+}
