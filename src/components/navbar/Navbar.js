@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { connectWallet, connectFailed } from "../../redux/WalletAction";
-import { AppBar, Toolbar, Typography, Button, Container, Box } from '@mui/material';
+import { connectFailed } from "../../redux/WalletAction";
+import { AppBar, Toolbar, Typography, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import ConenctWallet from "../connectwallet";
 import logo from '../../assets/images/logo.png';
@@ -11,17 +11,11 @@ import "./styles.css";
 const Navbar = () => {
 
   const [openWallet, setOpenWallet] = useState(false);
-  useEffect(() => {
-    if (web3Modal.cachedProvider) {
-      dispatch(connectWallet("metamask"))
-    }
-  }, []);
 
   //connect wallet
   const dispatch = useDispatch();
   const wallet = useSelector((state) => state.WalletConnect);
 
-  const { connected } = wallet;
   const connect = () => {
     setOpenWallet(true);
   };

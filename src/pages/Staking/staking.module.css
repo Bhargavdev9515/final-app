@@ -1,15 +1,14 @@
 .container {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 25px;
   padding-left: 25px;
 }
 
 .card {
   border: 2px solid linear-gradient(45deg, orange, yellow, rgb(47, 185, 47));
   border-radius: 1em;
-  width: 23%; /* Adjust this according to your needs */
   margin-bottom: 20px;
-  margin-right: 25px;
   background: transparent;
 }
 
@@ -19,12 +18,11 @@
 }
 
 .img {
-  width: 250px;
-  height: 350px;
+  width: 100%; /* Adjust this according to your needs */
+  height: auto;
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.25);
   border: transparent 1px solid;
   border-radius: 1em;
-  margin-left: 30px;
 }
 
 .btn1 {
@@ -42,6 +40,25 @@
   margin: 4px 2px;
 }
 
+.input {
+  margin: 10px 0px !important;
+}
+
+.disabled {
+  background-color: #757575;
+  border: transparent 1px solid;
+  border-radius: 1em;
+  color: white;
+  font-weight: bolder !important;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: not-allowed;
+}
+
 .btn1:hover {
   background-color: white;
   color: rgba(228, 159, 7, 1);
@@ -52,4 +69,10 @@
   color: #fff;
   font-weight: bolder;
   margin: 10px 0px 0px 30px;
+}
+
+@media (min-width: 1440px) {
+  .container {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
 }

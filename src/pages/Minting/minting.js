@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -8,26 +7,21 @@ import img1 from '../../assets/images/level1.jpg';
 import img2 from '../../assets/images/level2.jpg';
 import img3 from '../../assets/images/level3.jpg';
 import styles from "./minting.module.css";
-
+import BigNumber from 'bignumber.js';
 const web3 = new Web3();
 
-
-
-function _Minting() {
-  const [price, setPrice] = useState("");
+function MintingPage() {
   const [isMinting, setIsMinting] = useState([false, false, false]);
-  const [_level, setlevel] = useState(false);
+  const [nftDetails, setNftDetails] = useState([
+    { level: 1, price: 0, supply: 0, minted: 0, remaining: 0 },
+    { level: 2, price: 0, supply: 0, minted: 0, remaining: 0 },
+    { level: 3, price: 0, supply: 0, minted: 0, remaining: 0 },
+  ]);
   const [hoverIndex, setHoverIndex] = useState(null);
-  const [nftCounts, setNftCounts] = useState({ level1: 0, level2: 0, level3: 0 });
-  const [loading, setLoading] = useState(false);
   const [hasNFTs, setHasNFTs] = useState(false);
 
   const wallet = useSelector((state) => state.WalletConnect);
-  const { web3, address, mint, mintoApp, token1 } = wallet;
-  // const [MINTID,SETmintid] =useState()
-  const [MINTID, SETmintid] = useState(() =>
-    JSON.parse(localStorage.getItem("MINTID")) || []
-  );
+  const { address, mint, token1 } = wallet;
 
   const navigate = useNavigate();
 
@@ -38,24 +32,38 @@ function _Minting() {
         newState[level - 1] = true;
         return newState;
       });
-      const isConditionsSatisfied = await conditions(level);
-      console.log("isConditionsSatisfied", isConditionsSatisfied);
-      if (isConditionsSatisfied) {
-        console.log("address", address);
+
+      const balance = new BigNumber(await token1.methods.balanceOf(address).call());
+      const price = new BigNumber(await mint.methods.getPrices(level).call());
+      const allowance = new BigNumber(await token1.methods
+        .allowance(address, process.env.REACT_APP_MINTING)
+        .call());
+
+      if (balance.isLessThan(price)) {
+        toast.error("Insufficient balance");
+      } else if (price.isGreaterThan(allowance)) {
+        await token1.methods
+          .approve(process.env.REACT_APP_MINTING, "10000000000000000000000")
+          .send({ from: address });
         const _mint = await mint.methods
           .mintTreasuryCollection(level)
           .send({ from: address });
-        console.log("mint", _mint);
-        showDatas();
-        fetchNFTBalances();
+        toast.success("NFT Minted Successfully");
       } else {
-        toast.error("Try Again");
+        const _mint = await mint.methods
+          .mintTreasuryCollection(level)
+          .send({ from: address });
+        toast.success("NFT Minted Successfully");
       }
+
       setIsMinting(prevState => {
         const newState = [...prevState];
         newState[level - 1] = false;
         return newState;
       });
+
+      fetchNFTDetails();
+
     } catch (e) {
       toast.error(e.message);
       setIsMinting(prevState => {
@@ -63,79 +71,36 @@ function _Minting() {
         newState[level - 1] = false;
         return newState;
       });
-      fetchNFTBalances();
-
     }
   };
 
-  const conditions = async (level) => {
+
+  const fetchNFTDetails = async () => {
     try {
-      const balance = await token1.methods.balanceOf(address).call();
-      const price = await mint.methods.getPrices(level).call();
-      const allowance = await token1.methods
-        .allowance(address, process.env.REACT_APP_MINTING)
-        .call();
+      const detailsPromises = nftDetails.map(async (item) => {
+        const level = item.level;
+        const price = await mint.methods.getPrices(level).call();
+        const priceAsString = price.toString();
+        const rPrice = web3.utils.fromWei(priceAsString, "ether");
+        const totalSupply = await mint.methods.nftLevelSupply(level).call();
+        const totalMinted = await mint.methods.totalMintedNFTs(level).call();
+        console.log(totalSupply, totalMinted)
+        const remaining = totalSupply - totalMinted;
+        return { level, price: rPrice, supply: totalSupply, minted: totalMinted, remaining };
+      });
 
-      // Check if balance is less than the price
-      if (balance < price) {
-        toast.error("Insufficient balance");
-        return false;
-      }
-      // Check if price is greater than the allowance
-      else if (price > allowance) {
-        // Ask for approval
-        await token1.methods
-          .approve(process.env.REACT_APP_MINTING, "10000000000000000000000")
-          .send({ from: address });
-      }
-
-      // If neither of the conditions are met, return true
-      return true;
+      const details = await Promise.all(detailsPromises);
+      setNftDetails(details);
     } catch (e) {
-      toast.error("Check Balance");
-      return false;
+      console.log(e)
     }
   };
+
 
   const userHasNFTs = async () => {
     const getIDs = await mint.methods.getAllCollections(address).call();
     console.log(getIDs.length)
     return getIDs.length > 0;
-  };
-
-  const showDatas = async () => {
-    const getIDs = await mint.methods.getAllCollections(address).call();
-    console.log("getIds", getIDs);
-    SETmintid(getIDs);
-    localStorage.setItem("MINTID", JSON.stringify(getIDs));
-  };
-
-  // fetch NFT balances
-  const fetchNFTBalances = async () => {
-    setLoading(true);
-    const allNFTs = await mint.methods.getAllCollections(address).call();
-
-    const counts = { level1: 0, level2: 0, level3: 0 };
-
-    for (const nft of allNFTs) {
-      const level = await mint.methods.getLevel(nft).call();
-      switch (level) {
-        case '1':
-          counts.level1++;
-          break;
-        case '2':
-          counts.level2++;
-          break;
-        case '3':
-          counts.level3++;
-          break;
-        default:
-          console.error(`Unexpected NFT level: ${level}`);
-      }
-    }
-
-    setNftCounts(counts);
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -144,16 +109,11 @@ function _Minting() {
       setHasNFTs(result);
     };
 
-    if (wallet.connected === true) checkNFTs();
-  }, [address, mint]); // <- List of dependencies
-
-
-  useEffect(() => {
     if (wallet.connected === true) {
-      showDatas();
-      fetchNFTBalances();
+      fetchNFTDetails();
+      checkNFTs();
     }
-  }, [address, mint]); // <- List of dependencies
+  }, [address, mint]);
 
   return (
     <>
@@ -167,26 +127,36 @@ function _Minting() {
                 onMouseLeave={() => setHoverIndex(null)}
               >
                 <div className={styles.front}>
-                  <img src={img} className={styles.nft} />
+                  <img alt="" src={img} className={styles.nft} />
                 </div>
                 <div className={styles.back}>
                   <p className={styles.balance}>
-                    {loading ? '...' : index === 0 ? nftCounts.level1 :
-                      index === 1 ? nftCounts.level2 :
-                        index === 2 ? nftCounts.level3 : 0}
+                    Price: {nftDetails[index].price} Treasure<br />
+                    Total: {nftDetails[index].supply} NFT<br />
+                    Remaining: {nftDetails[index].remaining} NFT
+                    Minted: {nftDetails[index].minted} NFT
                   </p>
                 </div>
               </div>
               <div className={styles.nftbuttons}>
+                {nftDetails[index].remaining > 0 ? (
+                  <button
+                    className={styles.buy}
+                    onClick={() => mintNFT(index + 1)}
+                    disabled={isMinting[index]}
+                  >
+                    {isMinting[index] ? "Buying...." : `Buy NFT`}
+                  </button>
+                ) : (
+                  <button
+                    className={styles.disabled}
+                    disabled
+                  >
+                    Sold Out
+                  </button>
+                )}
                 <button
-                  className={styles.buy}
-                  onClick={() => mintNFT(index + 1)}
-                  disabled={isMinting[index]}
-                >
-                  {isMinting[index] ? "Buying...." : `Buy NFT`}
-                </button>
-                <button
-                  className={hasNFTs ? styles.stake : styles.stakeDisabled}
+                  className={hasNFTs ? styles.stake : styles.disabled}
                   onClick={() => { navigate('/staking') }}
                   disabled={!hasNFTs}
                 >
@@ -201,5 +171,5 @@ function _Minting() {
     </>
   );
 }
-export default _Minting;
 
+export default MintingPage;

@@ -9,9 +9,6 @@ import styles from "./minting.module.css"
 
 function UserNfts() {
   const [nftdatas, setnftdatas] = useState([]);
-  useEffect(() => {
-    // setnftdatas(Nftsdata)
-  }, [])
   return (
     <Row className="metabloq_container mt-5">
       <h4 className="text-center"></h4>

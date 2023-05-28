@@ -64,7 +64,7 @@ function ConenctWallet({ openWallet, setOpenWallet }) {
               {walletData.map((item, index) => (
                 <Box className="radioContainer" key={index}>
                   <Box className="radioTitle">
-                    <img className="icons" src={item.icon} />
+                    <img alt="" className="icons" src={item.icon} />
                     <Typography variant="body1" className="title">
                       {item.title}
                     </Typography>

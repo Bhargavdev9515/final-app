@@ -94,11 +94,11 @@ function WalletActionModal(props) {
               <Stack gap={3} style={{ height: "65px" }} className="d-flex justify-content-center align-items-center">
                 <button
                   className="poc_gradient-btn py-3"
-                  disabled={hashValue == undefined}
+                  disabled={hashValue === undefined}
                   onClick={() => { setWalletOpen(false) }}
                 >
                   {/* {console.log("link",link)} */}
-                  {hashValue == undefined ? <div style={{ textDecoration: "none" }}> <small style={{ color: "white" }}>CHECK IN SCAN</small> </div> :
+                  {hashValue === undefined ? <div style={{ textDecoration: "none" }}> <small style={{ color: "white" }}>CHECK IN SCAN</small> </div> :
                     <a href={link} target='blank' style={{ textDecoration: "none" }}>
                       <small style={{ color: "white" }}>CHECK IN SCAN</small></a>
                   }
